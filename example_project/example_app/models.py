@@ -8,6 +8,11 @@ class Example(models.Model):
     position = models.PositiveIntegerField('Position')
 
 
+    @classmethod
+    def get_order_filter(cls, obj):
+        return cls.objects.filter(position=obj.position)
+
+
     def __unicode__(self):
         return self.title
 
