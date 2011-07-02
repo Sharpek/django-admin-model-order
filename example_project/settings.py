@@ -5,7 +5,7 @@ import sys
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ROOT_DIRECTORY = os.path.dirname(__file__)
-sys.path.insert(0, os.path.join(ROOT_DIRECTORY, 'libs'))
+sys.path.insert(0, os.path.join(os.path.dirname(ROOT_DIRECTORY), 'libs'))
 sys.path.insert(0, os.path.join(ROOT_DIRECTORY, '..'))
 
 ADMINS = (

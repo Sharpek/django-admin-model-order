@@ -6,3 +6,5 @@
 *.pyo
 *.tmp_*
 /example_project/static/
+/example_project/django
+/example_project/db
