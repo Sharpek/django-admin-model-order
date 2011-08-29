@@ -1,41 +1,44 @@
 {% extends 'admin/base_site.html' %}
 {% block javascripts %}
-	{{ block.super }}
-	<script type="text/javascript" charset="utf-8">
-		(function($) {
-			$(document).ready(function() {
-				django.jQuery('#sortable-list').sortable({
-					'items': 'li',
-					'cursor': 'move',
-					'axis': 'y',
-					'update': function(event, ui) {
-						items = django.jQuery(this).find('li').get();
-						django.jQuery(items).each(function(index) {
-							input = django.jQuery(this).children('input').first();
-							input.attr('value', index);
-						});
-					}
-				});
-			});
-		})(django.jQuery);
-	</script>
+    {{ block.super }}
+    <script type="text/javascript" charset="utf-8">
+        (function($) {
+            $(document).ready(function() {
+                django.jQuery('#sortable-list').sortable({
+                    'items': 'li',
+                    'cursor': 'move',
+                    'axis': 'y',
+                    'update': function(event, ui) {
+                        items = django.jQuery(this).find('li').get();
+                        django.jQuery(items).each(function(index) {
+                            input = django.jQuery(this).children('input').first();
+                            input.attr('value', index);
+                        });
+                    }
+                });
+            });
+        })(django.jQuery);
+        {% if request.GET.refresh %}
+        window.opener.location.href = window.opener.location.href;
+        {% endif %}
+    </script>
 {% endblock %}
 
 {% block content %}
-	<br />
-	<form method="post" action="">
-		{% csrf_token %}
-		<div class="sorted-list">
-			<ol id="sortable-list">
-			{% for element in elements %}
-				<li>{{ forloop.counter }}. {{ element }} <input type="hidden" name="position_{{ element.pk }}" value="{{ element.position }}" /></li>
-			{% endfor %}
-			</ol>
-		</div>
-	    <div id="submit" class="module footer">
-	        <ul class="submit-row">
-	            <li class="submit-button-container"><input type="submit" class="default" name="_save" value="Save"/></li>
-	        </ul>
-	    </div>
-	</form>
+    <br />
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="sorted-list">
+            <ol id="sortable-list">
+            {% for element in elements %}
+                <li style="cursor: move;">{{ forloop.counter }}. {{ element }} <input type="hidden" name="position_{{ element.pk }}" value="{{ element.position }}" /></li>
+            {% endfor %}
+            </ol>
+        </div>
+        <div id="submit" class="module footer">
+            <ul class="submit-row">
+                <li class="submit-button-container"><input type="submit" class="default" name="_save" value="Save"/></li>
+            </ul>
+        </div>
+    </form>
 {% endblock %}
